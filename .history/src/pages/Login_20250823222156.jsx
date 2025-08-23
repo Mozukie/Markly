@@ -40,7 +40,7 @@ export default function Login() {
 
         {/* Register Panel */}
         <div
-          className={`bg-white p-6 rounded-xl shadow-2xl max-w-md w-full mt-5 mr-24 flex flex-col items-center transition-all duration-500 z-30 ${showRegister ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}
+          className={`bg-white p-6 rounded-xl shadow-2xl max-w-md w-full mt-10 mr-24 flex flex-col items-center transition-all duration-500 z-30 ${showRegister ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}
           style={{ minWidth: '420px', borderTopLeftRadius: '0.75rem', borderBottomLeftRadius: '0.75rem' }}
         >
           <h2 className="text-xl font-bold mb-4 text-center">Register</h2>

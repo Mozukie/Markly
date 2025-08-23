@@ -5,7 +5,7 @@ export default function Header() {
   const isTeacher = false;
 
   return (
-    <header className="header top-0 left-0 right-0 bg-white-100 mr-2 flex justify-between items-center shadow-md h-26 w-full z-100">
+    <header className="header fixed bg-white-100 mr-2 flex justify-between items-center shadow-md h-26 w-full z-100">
       <img src="/icon.png" alt="Logo" className="h-25 w-25 ml-10" />
       {isLoggedIn ? (
         isTeacher ? (
