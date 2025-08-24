@@ -1,9 +1,47 @@
 import React, { useState } from "react";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
+import axios from "axios";
 
 export default function Login() {
   const [showRegister, setShowRegister] = useState(false);
+  const [userLogin, setUserLogin]  = useState({"email": "", "password": ""});
+  const [userRegister, setUserRegister] = useState({"firstname": "", "lastname": "", "email": "", "password": "", "confirmPassword": ""});
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", userLogin);
+    console.log("✅ Login Success:", res.data);
+    alert("Login successful!");
+    localStorage.setItem("token", res.data.token); // Save token
+  } catch (err) {
+    console.error("❌ Login Error:", err.response?.data || err.message);
+    alert("Login failed!");
+  }
+};
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+  if (userRegister.password !== userRegister.confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/register", {
+      firstname: userRegister.firstname,
+      lastname: userRegister.lastname,
+      email: userRegister.email,
+      password: userRegister.password
+    });
+    console.log("✅ Registration Success:", res.data);
+    alert("Registration successful! Please log in.");
+    setShowRegister(false);
+  } catch (err) {
+    console.error("❌ Registration Error:", err.response?.data || err.message);
+    alert("Registration failed!");  
+  }
+};
 
   return (
     <>
@@ -15,14 +53,14 @@ export default function Login() {
           style={{ minWidth: '300px' }}
         >
           <h2 className="text-xl font-bold mb-4 text-center">Login to Markly</h2>
-          <form className="w-full flex flex-col items-center">
+          <form className="w-full flex flex-col items-center" onSubmit={handleLogin}>
             <div className="mb-3 w-3/4">
               <label className="block text-gray-700 mb-1 text-center" htmlFor="email">Email</label>
-              <input type="email" id="email" className="w-full px-2 py-1.5 border rounded text-center" required />
+              <input type="email" id="email" className="w-full px-2 py-1.5 border rounded text-center" value={userLogin.email} onChange={(e) => setUserLogin({... userLogin, email: e.target.value})} required />
             </div>
             <div className="mb-4 w-3/4">
               <label className="block text-gray-700 mb-1 text-center" htmlFor="password">Password</label>
-              <input type="password" id="password" className="w-full px-2 py-1.5 border rounded text-center" required />
+              <input type="password" id="password" className="w-full px-2 py-1.5 border rounded text-center" value={userLogin.password} onChange={(e) => setUserLogin({... userLogin, password: e.target.value})} required />
             </div>
             <button type="submit" className="w-3/4 bg-[#43699c] text-white py-1.5 rounded hover:bg-[#365f8a] transition-colors">Login</button>
           </form>
@@ -44,28 +82,28 @@ export default function Login() {
           style={{ minWidth: '420px', borderTopLeftRadius: '0.75rem', borderBottomLeftRadius: '0.75rem' }}
         >
           <h2 className="text-xl font-bold mb-4 text-center">Register</h2>
-          <form className="w-full flex flex-col items-center">
+          <form className="w-full flex flex-col items-center" onSubmit={handleRegister}>
             <div className="mb-3 w-3/4 flex gap-3">
               <div className="w-1/2">
                 <label className="block text-gray-700 mb-1 text-center" htmlFor="reg-firstname">First Name</label>
-                <input type="text" id="reg-firstname" className="w-full px-2 py-1.5 border rounded text-center" required />
+                <input type="text" id="reg-firstname" className="w-full px-2 py-1.5 border rounded text-center" value={userRegister.firstname} onChange={(e) => setUserRegister({... userRegister, firstname : e.target.value})} required />
               </div>
               <div className="w-1/2">
                 <label className="block text-gray-700 mb-1 text-center" htmlFor="reg-lastname">Last Name</label>
-                <input type="text" id="reg-lastname" className="w-full px-2 py-1.5 border rounded text-center" required />
+                <input type="text" id="reg-lastname" className="w-full px-2 py-1.5 border rounded text-center"  value={userRegister.lastname} onChange={(e) => setUserRegister({... userRegister, lastname : e.target.value})} required />
               </div>
             </div>
             <div className="mb-3 w-3/4">
               <label className="block text-gray-700 mb-1 text-center" htmlFor="reg-email">Email</label>
-              <input type="email" id="reg-email" className="w-full px-2 py-1.5 border rounded text-center" required />
+              <input type="email" id="reg-email" className="w-full px-2 py-1.5 border rounded text-center"  value={userRegister.email} onChange={(e) => setUserRegister({... userRegister, email : e.target.value})} required />
             </div>
             <div className="mb-3 w-3/4">
               <label className="block text-gray-700 mb-1 text-center" htmlFor="reg-password">Password</label>
-              <input type="password" id="reg-password" className="w-full px-2 py-1.5 border rounded text-center" required />
+              <input type="password" id="reg-password" className="w-full px-2 py-1.5 border rounded text-center"  value={userRegister.password} onChange={(e) => setUserRegister({... userRegister, password : e.target.value})} required />
             </div>
             <div className="mb-3 w-3/4">
               <label className="block text-gray-700 mb-1 text-center" htmlFor="confirm-password">Confirm Password</label>
-              <input type="password" id="confirm-password" className="w-full px-2 py-1.5 border rounded text-center" required />
+              <input type="password" id="confirm-password" className="w-full px-2 py-1.5 border rounded text-center"  value={userRegister.confirmPassword} onChange={(e) => setUserRegister({... userRegister, confirmPassword : e.target.value})} required />
             </div>
             <div className="text-sm">
               <input type="checkbox" id="teacher-checkbox" className="mt-3" />
