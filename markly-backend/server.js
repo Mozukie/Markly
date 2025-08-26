@@ -2,18 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import authRoutes from "./api/auth.js";
-import classRoutes from "./api/class.js"
+import authRoutes from "./routes/auth.js";
+import classRoutes from "./routes/class.js"
 
 dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: ["https://markly-tpoz.vercel.app/"], 
-  credentials: true
-}));
-
+app.use(cors());
 app.use(express.json());
 
 // Routes
