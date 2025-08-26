@@ -22,7 +22,7 @@ export default function Classes() {
         const fetchClasses = async () => {
             try {
             const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-            const res = await axios.get("http://https://markly.onrender.com:5000/api/classes", {
+            const res = await axios.get("https://markly.onrender.com/api/classes", {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setClassList(res.data);
@@ -48,12 +48,12 @@ export default function Classes() {
 
         try {
             if (isEditing) {
-            await axios.put(`http://https://markly.onrender.com:5000/api/classes/${editId}`, payload, {
+            await axios.put(`https://markly.onrender.com/api/classes/${editId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Class updated successfully!");
             } else {
-            await axios.post("http://https://markly.onrender.com:5000/api/classes", payload, {
+            await axios.post("https://markly.onrender.com/api/classes", payload, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Class added successfully!");
@@ -63,7 +63,7 @@ export default function Classes() {
             setIsEditing(false);
             setEditId(null);
 
-            const updated = await axios.get("http://https://markly.onrender.com:5000/api/classes", { headers: { Authorization: `Bearer ${token}` }});
+            const updated = await axios.get("https://markly.onrender.com/api/classes", { headers: { Authorization: `Bearer ${token}` }});
             setClassList(updated.data);
         } catch (err) {
             console.error("Error saving class:", err.response?.data || err.message);
@@ -76,12 +76,12 @@ export default function Classes() {
 
             try {
                 const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-                await axios.delete(`http://https://markly.onrender.com:5000/api/classes/${id}`, {
+                await axios.delete(`https://markly.onrender.com/api/classes/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
                 });
 
                 // Refresh class list
-                const updated = await axios.get("http://https://markly.onrender.com:5000/api/classes", {
+                const updated = await axios.get("https://markly.onrender.com/api/classes", {
                 headers: { Authorization: `Bearer ${token}` }
                 });
                 setClassList(updated.data);
@@ -193,7 +193,7 @@ export default function Classes() {
                             <option value="7200">2 hours</option>
                         </select>
 
-                        < QRCode value={`http://https://markly.onrender.com:5000/attendance/${selectedClass._id}?expires=${Date.now() + parseInt(expiryDuration) * 1000}`}size={300} className="mx-auto"/>
+                        < QRCode value={`https://markly.onrender.com/attendance/${selectedClass._id}?expires=${Date.now() + parseInt(expiryDuration) * 1000}`}size={300} className="mx-auto"/>
                         
                         <div className="flex justify-end mt-4">
                             <button onClick={() => { setQrModal(false); setSelectedClass(null); setExpiryDuration("300");}} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
