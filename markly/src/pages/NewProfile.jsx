@@ -22,7 +22,7 @@ export default function NewProfile() {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("You must login first");
 
-      const res = await fetch("http://localhost:5000/api/auth/profile", {
+      const res = await fetch("http://https://markly.onrender.com:5000/api/auth/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

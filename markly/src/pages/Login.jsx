@@ -19,7 +19,7 @@ export default function Login() {
 const handleLogin = async (e) => {
   e.preventDefault();
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/login", userLogin);
+    const res = await axios.post("http://https://markly.onrender.com:5000/api/auth/login", userLogin);
     console.log("Login Success:", res.data);
     alert("Login successful!");
 
@@ -53,7 +53,7 @@ const handleRegister = async (e) => {
     return;
   }
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/register", {
+    const res = await axios.post("http://https://markly.onrender.com:5000/api/auth/register", {
       firstname: userRegister.firstname,
       lastname: userRegister.lastname,
       email: userRegister.email,

@@ -10,7 +10,7 @@ export default function TeacherDashboard() {
       useEffect(() => {
         const fetchUser = async () => {
           try {
-            const res = await fetch("http://localhost:5000/api/auth/me", {
+            const res = await fetch("http://https://markly.onrender.com:5000/api/auth/me", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
