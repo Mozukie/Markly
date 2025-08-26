@@ -7,7 +7,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/me", {
+        const res = await fetch("http://localhost:5000/api/auth/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
