@@ -1,40 +1,53 @@
-# ===== Node.js / Backend =====
+# ---- Environment & secrets ----
+.env
+*.env
+*.key
+*.pem
+*.crt
+*.cert
+*.secret
+*.token
+
+# ---- Node.js ----
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-package-lock.json
 
-# ===== Environment & Secrets =====
-.env
-.env.local
-.env.*.local
-
-# ===== Logs & Runtime =====
-logs
+# ---- Logs ----
 *.log
-*.out
-*.pid
-*.seed
-*.pid.lock
+logs/
+debug.log
+error.log
 
-# ===== Build / Dist =====
+# ---- OS generated files ----
+.DS_Store
+Thumbs.db
+
+# ---- Build / cache ----
 dist/
 build/
 .cache/
 .next/
 out/
 
-# ===== System / Editor =====
-.DS_Store
-Thumbs.db
+# ---- IDE / editor ----
 .vscode/
 .idea/
 *.swp
+*.swo
+*.bak
+*.tmp
 
-# ===== Coverage / Testing =====
+# ---- Coverage / test output ----
 coverage/
 *.lcov
-jest-cache/
-.nyc_output/
+
+# ---- History ----
+.history/
+.history/*
+.history/**
+
+# ---- Misc ----
+*.pid
+*.seed
