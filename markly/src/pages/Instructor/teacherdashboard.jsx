@@ -8,6 +8,16 @@ export default function TeacherDashboard() {
 
     
       useEffect(() => {
+
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+        const role = localStorage.getItem("role") || sessionStorage.getItem("role");
+
+        if(!token || !role) {
+          // If no token or role, redirect to login
+          window.location.href = "/login";
+          return;
+        }
+
         const fetchUser = async () => {
           try {
             const res = await fetch("https://markly.onrender.com/api/auth/me", {
