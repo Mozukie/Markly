@@ -1,0 +1,24 @@
+{
+  "projects": {
+    "frontend": {
+      "root": "markly"
+    },
+    "backend": {
+      "root": "markly-backend"
+    }
+  },
+  "builds": [
+    {
+      "src": "markly/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    },
+    {
+      "src": "markly-backend/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/markly-backend/$1.js" }
+  ]
+}

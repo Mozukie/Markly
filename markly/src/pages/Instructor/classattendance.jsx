@@ -12,7 +12,7 @@ export default function ClassAttendance() {
     const fetchAttendance = async () => {
       try {
         const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-        const res = await axios.get(`http://https://markly.onrender.com:5000/api/attendance/${classId}`, {
+        const res = await axios.get(`https://markly.onrender.com/api/attendance/${classId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStudents(res.data);
