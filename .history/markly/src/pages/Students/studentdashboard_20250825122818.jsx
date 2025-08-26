@@ -7,7 +7,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/me", {
+        const res = await fetch("http://localhost:5000/api/auth/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -18,6 +18,7 @@ export default function StudentDashboard() {
         if (!res.ok) throw new Error("Failed to fetch user");
         const data = await res.json();
         setUser(data);
+        console.log("Fetched user:", data);
       } catch (err) {
         console.error(err.message);
       }
@@ -44,7 +45,7 @@ export default function StudentDashboard() {
           <p className="text-gray-700 mb-6 text-center">
             Name: {user.firstname} {user.lastname}
           </p>
-          <p className="text-gray-700 mb-6 text-center">Role: {user.role}</p>
+          <p className="text-gray-700 mb-6 text-center">Section: {user.section}</p>
         </div>
       </main>
     </div>

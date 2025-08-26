@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Base font for body */
+body, html {
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;       /* base font size */
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Font Classes */
+.poiret-one-regular { font-family: "Poiret One", sans-serif; font-weight: 400; }
+.quicksand { font-family: "Quicksand", sans-serif; font-weight: 400; }
+.quicksand-bold { font-family: "Quicksand", sans-serif; font-weight: 700; }
+.fredoka { font-family: "Fredoka", sans-serif; font-weight: 400; }
+.fredoka-bold { font-family: "Fredoka", sans-serif; font-weight: 700; }
+.gruppo { font-family: "Gruppo", cursive; font-weight: 400; }
+.hepta-slab { font-family: "Hepta Slab", serif; font-weight: 400; }
+.hepta-slab-bold { font-family: "Hepta Slab", serif; font-weight: 900; }
+.jura-regular { font-family: "Jura", sans-serif; font-weight: 400; }
+.jura-medium { font-family: "Jura", sans-serif; font-weight: 500; }
+.jura-semi-bold { font-family: "Jura", sans-serif; font-weight: 600; }
+
+/* Titles */
+h1, .title { font-family: "Fredoka", sans-serif; font-size: 2.5rem; }
+.subtitle, .semi-title, .jura-semi-bold,
+.login-title, .register-title,
+h2, h3, h4, h5, h6 {
+  font-family: "Jura", sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* Responsive Typography */
+@media (max-width: 1024px) {
+  h1, .title { font-size: 2rem; }
+  .subtitle, .semi-title, .jura-semi-bold,
+  h2, h3, h4, h5, h6 { font-size: 1.3rem; }
+}
+
+@media (max-width: 768px) {
+  h1, .title { font-size: 1.75rem; }
+  .subtitle, .semi-title, .jura-semi-bold,
+  h2, h3, h4, h5, h6 { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  h1, .title { font-size: 1.5rem; }
+  .subtitle, .semi-title, .jura-semi-bold,
+  h2, h3, h4, h5, h6 { font-size: 1rem; }
+}
+
+/* Make containers flexible */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Flexible layout example */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.flex-item {
+  flex: 1 1 200px; /* grow, shrink, min width */
+}
+
+/* Images scale with container */
+img {
+  max-width: 100%;
+  height: auto;
+}

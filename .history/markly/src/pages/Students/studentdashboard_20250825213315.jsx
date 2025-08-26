@@ -7,11 +7,11 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/me", {
+        const res = await fetch("http://localhost:5000/api/auth/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT from login
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
@@ -26,25 +26,30 @@ export default function StudentDashboard() {
     fetchUser();
   }, []);
 
-  if (!user) {
-    return <p className="text-center mt-20">Loading...</p>;
-  }
+  if (!user) return <p className="text-center mt-20">Loading...</p>;
 
   return (
     <div>
-      <Header isLoggedIn={true} isTeacher={false} />
+      <Header isLoggedIn={true} isTeacher={user.role === "Student"} />
       <main className="container mx-auto p-4">
         <div
           className="bg-white p-6 rounded-lg shadow-lg"
-          style={{ minWidth: "600px", marginTop: "100px" }}
+          style={{ minWidth: "300px", marginTop: "100px" }}
         >
           <h1 className="text-3xl font-bold mb-4 text-center">
             Student Dashboard
           </h1>
-          <p className="text-gray-700 mb-6 text-center">
+          <p className="text-gray-700 mb-2 text-center">
             Name: {user.firstname} {user.lastname}
           </p>
-          <p className="text-gray-700 mb-6 text-center">Role: {user.role}</p>
+          <p className="text-gray-700 mb-2 text-center">
+            Section: {user.section || "Not assigned"}
+          </p>
+          {user.studentNumber && (
+            <p className="text-gray-700 mb-2 text-center">
+              Student Number: {user.studentNumber}
+            </p>
+          )}
         </div>
       </main>
     </div>
