@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header.jsx";
 
 export default function StudentDashboard() {
   const [user, setUser] = useState(null);
-  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  const navigate = useNavigate();
+
+  // ✅ Check both storages
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
 
   useEffect(() => {
+    if (!token) {
+      // No token? Send back to login
+      navigate("/login");
+      return;
+    }
+
     const fetchUser = async () => {
       try {
         const res = await fetch("https://markly.onrender.com/api/auth/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // ✅ Use the token variable here
+            Authorization: `Bearer ${token}`, // ✅ attach token
           },
         });
 
@@ -20,12 +31,18 @@ export default function StudentDashboard() {
         const data = await res.json();
         setUser(data);
       } catch (err) {
-        console.error(err.message);
+        console.error("Auth error:", err.message);
+        // Token invalid/expired → clear storage + redirect
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("role");
+        navigate("/login");
       }
     };
 
     fetchUser();
-  }, [token]); // ✅ Optional: include token as a dependency
+  }, [token, navigate]);
 
   if (!user) return <p className="text-center mt-20">Loading...</p>;
 
