@@ -4,7 +4,6 @@ import Header from "../../components/Header.jsx";
 
 export default function TeacherDashboard() {
     const [user, setUser] = useState({});
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
     
       useEffect(() => {
