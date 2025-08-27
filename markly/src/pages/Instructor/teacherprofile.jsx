@@ -6,18 +6,26 @@ import TeacherModal from "../../components/teacherModal.jsx";
 export default function TeacherProfile() {
   const [teacher, setTeacher] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Fetch current teacher info
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-        const res = await axios.get("https://markly.onrender.com/api/teachers/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+        const res = await axios.get(
+          "https://markly.onrender.com/api/teachers/me",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setTeacher(res.data);
       } catch (err) {
-        console.error("Error fetching teacher:", err.response?.data || err.message);
+        console.error(
+          "Error fetching teacher:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -27,46 +35,81 @@ export default function TeacherProfile() {
   // Update teacher info
   const handleUpdateTeacher = async (updatedData) => {
     try {
-      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-      const res = await axios.put(`https://markly.onrender.com/api/teachers/${teacher._id}`, updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const token =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+      const res = await axios.put(
+        `https://markly.onrender.com/api/teachers/${teacher._id}`,
+        updatedData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setTeacher(res.data);
       setModalOpen(false);
       alert("Profile updated successfully!");
     } catch (err) {
-      console.error("Error updating teacher:", err.response?.data || err.message);
+      console.error(
+        "Error updating teacher:",
+        err.response?.data || err.message
+      );
       alert("Failed to update profile.");
     }
   };
 
-  if (!teacher) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div>
+        <Header isLoggedIn={true} isTeacher={true} />
+        <main className="container mx-auto p-6 mt-24">
+          <p className="text-center text-gray-600">Loading teacher info...</p>
+        </main>
+      </div>
+    );
+
+  if (!teacher)
+    return (
+      <div>
+        <Header isLoggedIn={true} isTeacher={true} />
+        <main className="container mx-auto p-6 mt-24">
+          <p className="text-center text-red-500">
+            Teacher information not found.
+          </p>
+        </main>
+      </div>
+    );
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50">
       <Header isLoggedIn={true} isTeacher={true} />
-      <main className="container mx-auto p-6 mt-24">
+
+      <main className="container mx-auto p-6 mt-24 space-y-6">
         <h1 className="text-3xl font-bold mb-6">Teacher Profile</h1>
 
-        {/* Personal Info */}
-        <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Personal Information</h2>
+        {/* Registration / Basic Info */}
+        <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Registration Information</h2>
           <p><strong>Name:</strong> {teacher.name}</p>
           <p><strong>Email:</strong> {teacher.email}</p>
-          <p><strong>Age:</strong> {teacher.age}</p>
-          <p><strong>Phone:</strong> {teacher.phone}</p>
-          <p><strong>Address:</strong> {teacher.address}</p>
+          {teacher.username && (
+            <p><strong>Username:</strong> {teacher.username}</p>
+          )}
+        </section>
+
+        {/* Personal Info */}
+        <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Personal Information</h2>
+          <p><strong>Age:</strong> {teacher.age || "N/A"}</p>
+          <p><strong>Phone:</strong> {teacher.phone || "N/A"}</p>
+          <p><strong>Address:</strong> {teacher.address || "N/A"}</p>
         </section>
 
         {/* Professional Info */}
-        <section className="mb-6">
+        <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">Professional Information</h2>
-          <p><strong>Subjects:</strong> {teacher.subjects.join(", ")}</p>
-          <p><strong>Expertise:</strong> {teacher.expertise.join(", ")}</p>
-          <p><strong>Years of Experience:</strong> {teacher.yearsOfExperience}</p>
-          <p><strong>Bio:</strong> {teacher.bio}</p>
-          <p><strong>Department:</strong> {teacher.department}</p>
-          <p><strong>Employee ID:</strong> {teacher.employeeId}</p>
+          <p><strong>Subjects:</strong> {teacher.subjects?.join(", ") || "N/A"}</p>
+          <p><strong>Expertise:</strong> {teacher.expertise?.join(", ") || "N/A"}</p>
+          <p><strong>Years of Experience:</strong> {teacher.yearsOfExperience || 0}</p>
+          <p><strong>Bio:</strong> {teacher.bio || "N/A"}</p>
+          <p><strong>Department:</strong> {teacher.department || "N/A"}</p>
+          <p><strong>Employee ID:</strong> {teacher.employeeId || "N/A"}</p>
         </section>
 
         <button
@@ -76,7 +119,6 @@ export default function TeacherProfile() {
           Edit Profile
         </button>
 
-        {/* Edit Modal */}
         <TeacherModal
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
@@ -84,6 +126,6 @@ export default function TeacherProfile() {
           onSave={handleUpdateTeacher}
         />
       </main>
-    </>
+    </div>
   );
 }
