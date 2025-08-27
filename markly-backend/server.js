@@ -5,6 +5,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import classRoutes from "./routes/class.js"
 import studentRoutes from "./routes/student.js"
+import teacherRoutes from "./routes/teacher.js"
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/classes",classRoutes);
 app.use("api/student", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
 
 const PORT = process.env.PORT || 5000;
 

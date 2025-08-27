@@ -14,7 +14,7 @@ import Classes from './pages/Instructor/classes.jsx'
 import ClassAttendance from './pages/Instructor/classattendance.jsx'
 import TeacherProfile from './pages/Instructor/teacherprofile.jsx'
 import ClassAttended from './pages/Students/classAttended.jsx'
-
+import StudentProfile from './pages/Students/studentprofile.jsx'
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -40,7 +40,8 @@ function AnimatedRoutes() {
           <Route path="/classes" element={<Classes />} />
           <Route path="/classattendance" element={<ClassAttendance/>}/>
           <Route path="/teacherprofile" element={<TeacherProfile/>}/>
-          <Route path="/classattended" element={<ClassAttended/>}/> 
+          <Route path="/studentclasses" element={<ClassAttended/>}/> 
+          <Route path="/studentprofile" element={<StudentProfile/>}/>
          
         </Routes>
       </motion.div>
