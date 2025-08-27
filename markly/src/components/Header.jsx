@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import icon from "../assets/icon.png"
 
 export default function Header({ isLoggedIn: propIsLoggedIn, isTeacher: propIsTeacher }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // clear tokens
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // navigate without reload
+    navigate("/login");
+  };
+
 
 useEffect(() => {
   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -92,11 +104,7 @@ useEffect(() => {
             Classes Attended
           </NavLink>
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              window.location.href = "/login";
-            }}
+            onClick={handleLogout}
             className="text-gray-700 px-4 h-full flex items-center hover:bg-[#43699c] hover:text-white transition-colors duration-200"
           >
             Logout
@@ -110,7 +118,7 @@ useEffect(() => {
       <div className="container mr-20 flex flex-col md:flex-row justify-between items-center text-[20px] h-full">
         <div className="logo font-bold text-[#43699c] text-[30px] mb-2 md:mb-0">Markly</div>
         <nav className="flex flex-col md:flex-row h-full items-center">
-          <NavLink to="/" className={({ isActive }) =>
+          <NavLink to="/login" className={({ isActive }) =>
             `text-gray-700 px-4 h-full flex items-center transition-colors duration-200 ${
               isActive ? "bg-[#43699c] text-white" : "hover:bg-[#43699c] hover:text-white"
             }`
