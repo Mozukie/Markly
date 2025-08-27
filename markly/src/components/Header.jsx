@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import icon from "../assets/icon.png"
 
 export default function Header({ isLoggedIn: propIsLoggedIn, isTeacher: propIsTeacher }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -130,7 +131,7 @@ useEffect(() => {
 
   return (
     <header className="header top-0 left-0 right-0 bg-white-100 mr-2 flex justify-between items-center shadow-md h-20 w-full z-100">
-      <img src="../public/icon.png" alt="Logo" className="h-25 w-25 ml-10" />
+    <img src={icon} alt="Logo"/>
       {content}
     </header>
   );
