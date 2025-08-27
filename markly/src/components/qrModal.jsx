@@ -1,6 +1,6 @@
 // src/components/QRCodeModal.jsx
 import React from "react";
-import QRCode from "qrcode.react";
+import QRcode from 'react-qr-code'
 
 export default function QRCodeModal({ isOpen, onClose, classId }) {
   if (!isOpen) return null;
