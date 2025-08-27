@@ -12,6 +12,9 @@ import StudentDashboard from './pages/Students/studentdashboard.jsx'
 import TeacherDashboard from './pages/Instructor/teacherdashboard.jsx'
 import Classes from './pages/Instructor/classes.jsx'
 import ClassAttendance from './pages/Instructor/classattendance.jsx'
+import TeacherProfile from './pages/Instructor/teacherprofile.jsx'
+import ClassAttended from './pages/Students/classAttended.jsx'
+import StudentProfile from './pages/Students/studentprofile.jsx'
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -26,8 +29,9 @@ function AnimatedRoutes() {
         transition={{ duration: 0.4 }}
       >
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/newprofile" element={<NewProfile />} />
@@ -35,7 +39,9 @@ function AnimatedRoutes() {
           <Route path="/teacherdashboard" element={<TeacherDashboard />} />
           <Route path="/classes" element={<Classes />} />
           <Route path="/classattendance" element={<ClassAttendance/>}/>
-
+          <Route path="/teacherprofile" element={<TeacherProfile/>}/>
+          <Route path="/studentclasses" element={<ClassAttended/>}/> 
+          <Route path="/studentprofile" element={<StudentProfile/>}/>
          
         </Routes>
       </motion.div>

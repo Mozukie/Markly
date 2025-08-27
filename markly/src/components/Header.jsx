@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import icon from "../assets/icon.png"
 
 export default function Header({ isLoggedIn: propIsLoggedIn, isTeacher: propIsTeacher }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // clear tokens
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // navigate without reload
+    navigate("/login");
+  };
+
 
 useEffect(() => {
   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -51,11 +64,7 @@ useEffect(() => {
             Attendance
           </NavLink>
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              window.location.href = "/login"; // redirect to login
-            }}
+            onClick={handleLogout}
             className="text-gray-700 px-4 h-full flex items-center hover:bg-[#43699c] hover:text-white transition-colors duration-200"
           >
             Logout
@@ -91,11 +100,7 @@ useEffect(() => {
             Classes Attended
           </NavLink>
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              window.location.href = "/login";
-            }}
+            onClick={handleLogout}
             className="text-gray-700 px-4 h-full flex items-center hover:bg-[#43699c] hover:text-white transition-colors duration-200"
           >
             Logout
@@ -130,7 +135,7 @@ useEffect(() => {
 
   return (
     <header className="header top-0 left-0 right-0 bg-white-100 mr-2 flex justify-between items-center shadow-md h-20 w-full z-100">
-      <img src="/icon.png" alt="Logo" className="h-25 w-25 ml-10" />
+    <img src={icon} alt="Logo" className="h-25 w-25 ml-10" />
       {content}
     </header>
   );

@@ -1,28 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header.jsx";
 import axios from "axios";
-import { useEffect , useState } from "react";
-import QRCode from 'react-qr-code'
-
+import AddClassModal from "../../components/addClassModal.jsx";
+import QRCodeModal from "../../components/qrModal.jsx";
 
 export default function Classes() {
-    const [modal, setModal] = useState(false);
-    const [classData, setClassData] = useState({ "subject": "", "code": "", "section": "", "days": [], "time": "" });
-    const [classList, setClassList] = useState([]);   
-    const [isEditing, setIsEditing] = useState(false);
-    const [editId, setEditId] = useState(null);
-    const [qrModal, setQrModal] = React.useState(false);
-    const [selectedClass, setSelectedClass] = useState(null);
-    const [expiryDuration, setExpiryDuration] = useState("300");
-
-
-
+  const [modal, setModal] = useState(false);
+  const [classData, setClassData] = useState({
+    subject: "",
+    code: "",
+    section: "",
+    days: [],
+    time: "",
+  });
+  const [classList, setClassList] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [qrModal, setQrModal] = useState(false);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [expiryDuration, setExpiryDuration] = useState("300");
 
     useEffect(() => {
         const fetchClasses = async () => {
             try {
             const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-            const res = await axios.get("https://markly.onrender.com/api/classes", {
+            const res = await axios.get("http://https://markly.onrender.com:5000/api/classes", {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setClassList(res.data);
@@ -31,39 +33,39 @@ export default function Classes() {
             }
         };
 
-  fetchClasses();
-}, []);
+    fetchClasses();
+  }, []);
 
-    const handleSave = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
-        const payload = {
-            classSubject: classData.subject,
-            classCode: classData.code,
-            classSection: classData.section,
-            classDays: classData.days || [], // array of weekdays
-            classTime: classData.time,
-        };
+    const payload = {
+      classSubject: classData.subject,
+      classCode: classData.code,
+      classSection: classData.section,
+      classDays: classData.days || [],
+      classTime: classData.time,
+    };
 
         try {
             if (isEditing) {
-            await axios.put(`https://markly.onrender.com/api/classes/${editId}`, payload, {
+            await axios.put(`http://https://markly.onrender.com:5000/api/classes/${editId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Class updated successfully!");
             } else {
-            await axios.post("https://markly.onrender.com/api/classes", payload, {
+            await axios.post("http://https://markly.onrender.com:5000/api/classes", payload, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Class added successfully!");
             }
 
-            setModal(false);
-            setIsEditing(false);
-            setEditId(null);
+      setModal(false);
+      setIsEditing(false);
+      setEditId(null);
 
-            const updated = await axios.get("https://markly.onrender.com/api/classes", { headers: { Authorization: `Bearer ${token}` }});
+            const updated = await axios.get("http://https://markly.onrender.com:5000/api/classes", { headers: { Authorization: `Bearer ${token}` }});
             setClassList(updated.data);
         } catch (err) {
             console.error("Error saving class:", err.response?.data || err.message);
@@ -71,17 +73,17 @@ export default function Classes() {
         };
 
 
-        const handleDelete = async (id) => {
-            if (!window.confirm("Are you sure you want to delete this class?")) return;
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this class?")) return;
 
             try {
                 const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-                await axios.delete(`https://markly.onrender.com/api/classes/${id}`, {
+                await axios.delete(`http://https://markly.onrender.com:5000/api/classes/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
                 });
 
                 // Refresh class list
-                const updated = await axios.get("https://markly.onrender.com/api/classes", {
+                const updated = await axios.get("http://https://markly.onrender.com:5000/api/classes", {
                 headers: { Authorization: `Bearer ${token}` }
                 });
                 setClassList(updated.data);
@@ -90,39 +92,31 @@ export default function Classes() {
             }
             };
 
-        const handleEdit = (cls) => {
-            setClassData({
-                subject: cls.classSubject,
-                code: cls.classCode,
-                section: cls.classSection,
-                days: cls.classDay || [],
-                time: cls.classTime,
-            });
-            setEditId(cls._id);
-            setIsEditing(true);
-            setModal(true);
-            };
+  const handleEdit = (cls) => {
+    setClassData({
+      subject: cls.classSubject,
+      code: cls.classCode,
+      section: cls.classSection,
+      days: cls.classDay || [],
+      time: cls.classTime,
+    });
+    setEditId(cls._id);
+    setIsEditing(true);
+    setModal(true);
+  };
 
-
-        const toggleModal = () => {
-            setModal(!modal);
-            setIsEditing(false);
-            setEditId(null);
-            setClassData({ subject: "", code: "", section: "", days: [], time: "" });
-            };
-
-    return (
-        <div>
-            <Header isLoggedIn={true} isTeacher={true}/>
-            <main className="container mx-auto p-4">
-                <div
-                className="bg-white p-6 rounded-lg shadow-lg"
-                style={{ minHeight: '70vh' }}
-                >
-                <h1 className="text-2xl font-bold mb-4">Classes</h1>
-                <button onClick={toggleModal} className="bg-[#43699c] text-white px-4 py-2 rounded hover:bg-[#43699c] transition-colors">
-                    Add Class
-                </button>
+  return (
+    <div>
+      <Header isLoggedIn={true} isTeacher={true} />
+      <main className="container mx-auto p-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg" style={{ minHeight: "70vh" }}>
+          <h1 className="text-2xl font-bold mb-4">Classes</h1>
+          <button
+            onClick={() => setModal(true)}
+            className="bg-[#43699c] text-white px-4 py-2 rounded hover:bg-[#365f8a]"
+          >
+            Add Class
+          </button>
 
 
                 {modal && (
@@ -193,7 +187,7 @@ export default function Classes() {
                             <option value="7200">2 hours</option>
                         </select>
 
-                        < QRCode value={`https://markly.onrender.com/attendance/${selectedClass._id}?expires=${Date.now() + parseInt(expiryDuration) * 1000}`}size={300} className="mx-auto"/>
+                        < QRCode value={`http://https://markly.onrender.com:5000/attendance/${selectedClass._id}?expires=${Date.now() + parseInt(expiryDuration) * 1000}`}size={300} className="mx-auto"/>
                         
                         <div className="flex justify-end mt-4">
                             <button onClick={() => { setQrModal(false); setSelectedClass(null); setExpiryDuration("300");}} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
