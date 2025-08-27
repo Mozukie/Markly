@@ -31,7 +31,7 @@ export default function ClassAttended() {
     return <p className="text-center mt-10">No classes attended yet.</p>;
 
   return (
-    <>
+    <div>
       <Header isLoggedIn={true} isTeacher={false} />
       <main className="container mx-auto p-6 mt-24">
         <h1 className="text-3xl font-bold mb-6">Classes Attended</h1>
@@ -62,6 +62,6 @@ export default function ClassAttended() {
           ))}
         </ul>
       </main>
-    </>
+    </div>
   );
 }

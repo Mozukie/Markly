@@ -43,7 +43,7 @@ export default function StudentProfile() {
 
 
 return (
-    <>
+    <div>
     <Header isLoggedIn={true} isTeacher={false} />
     <main>
         <div className="flex justify-end p-4">
@@ -88,6 +88,6 @@ return (
 
         />
     </main>
-    </>
+    </div>
 )
 }
