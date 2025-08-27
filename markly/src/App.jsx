@@ -26,8 +26,9 @@ function AnimatedRoutes() {
         transition={{ duration: 0.4 }}
       >
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/newprofile" element={<NewProfile />} />
