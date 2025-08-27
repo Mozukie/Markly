@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header.jsx";
 import axios from "axios";
 import AddClassModal from "../../components/addClassModal.jsx";
-import QRCodeModal from "../../components/QRCodeModal.jsx";
+import QRCodeModal from "../../components/qrModal.jsx";
 
 export default function Classes() {
   const [modal, setModal] = useState(false);
