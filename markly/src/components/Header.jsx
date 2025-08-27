@@ -64,11 +64,7 @@ useEffect(() => {
             Attendance
           </NavLink>
           <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              window.location.href = "/login"; // redirect to login
-            }}
+            onClick={handleLogout}
             className="text-gray-700 px-4 h-full flex items-center hover:bg-[#43699c] hover:text-white transition-colors duration-200"
           >
             Logout
