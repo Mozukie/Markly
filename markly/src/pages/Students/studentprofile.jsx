@@ -15,9 +15,7 @@ export default function StudentProfile() {
           localStorage.getItem("token") || sessionStorage.getItem("token");
         const res = await axios.get(
           "https://markly.onrender.com/api/students",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudentData(res.data || []);
       } catch (err) {
@@ -79,16 +77,27 @@ export default function StudentProfile() {
                 key={student._id}
                 className="bg-white p-6 rounded-lg shadow-md"
               >
+                {/* Registration / Basic Info */}
+                <section className="mb-4">
+                  <h2 className="text-xl font-semibold mb-2">
+                    Registration Information
+                  </h2>
+                  <p className="text-gray-600">Name: {student.name}</p>
+                  <p className="text-gray-600">Email: {student.email}</p>
+                  {/* If you store username or password, show username only */}
+                  {student.username && (
+                    <p className="text-gray-600">Username: {student.username}</p>
+                  )}
+                </section>
+
                 {/* Personal Profile */}
                 <section className="mb-4">
                   <h2 className="text-xl font-semibold mb-2">
                     Personal Profile
                   </h2>
-                  <p className="text-gray-600">Name: {student.name}</p>
-                  <p className="text-gray-600">Email: {student.email}</p>
-                  <p className="text-gray-600">Age: {student.age}</p>
-                  <p className="text-gray-600">Address: {student.address}</p>
-                  <p className="text-gray-600">Phone: {student.phone}</p>
+                  <p className="text-gray-600">Age: {student.age || "N/A"}</p>
+                  <p className="text-gray-600">Address: {student.address || "N/A"}</p>
+                  <p className="text-gray-600">Phone: {student.phone || "N/A"}</p>
                 </section>
 
                 {/* Academic Profile */}
@@ -96,9 +105,9 @@ export default function StudentProfile() {
                   <h2 className="text-xl font-semibold mb-2">
                     Academic Profile
                   </h2>
-                  <p className="text-gray-600">Section: {student.section}</p>
+                  <p className="text-gray-600">Section: {student.section || "N/A"}</p>
                   <p className="text-gray-600">
-                    Student Number: {student.studentNumber}
+                    Student Number: {student.studentNumber || "N/A"}
                   </p>
                   <p className="text-gray-600">
                     Clubs: {student.clubs?.join(", ") || "N/A"}
@@ -110,12 +119,14 @@ export default function StudentProfile() {
                   <h2 className="text-xl font-semibold mb-2">
                     Guardian Information
                   </h2>
-                  <p className="text-gray-600">Name: {student.guardianName}</p>
                   <p className="text-gray-600">
-                    Email: {student.guardianEmail}
+                    Name: {student.guardianName || "N/A"}
                   </p>
                   <p className="text-gray-600">
-                    Phone: {student.guardianPhone}
+                    Email: {student.guardianEmail || "N/A"}
+                  </p>
+                  <p className="text-gray-600">
+                    Phone: {student.guardianPhone || "N/A"}
                   </p>
                 </section>
               </div>
