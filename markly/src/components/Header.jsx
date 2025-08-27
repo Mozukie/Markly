@@ -109,7 +109,7 @@ useEffect(() => {
       <div className="container mr-20 flex flex-col md:flex-row justify-between items-center text-[20px] h-full">
         <div className="logo font-bold text-[#43699c] text-[30px] mb-2 md:mb-0">Markly</div>
         <nav className="flex flex-col md:flex-row h-full items-center">
-          <NavLink to="/login" className={({ isActive }) =>
+          <NavLink to="/" className={({ isActive }) =>
             `text-gray-700 px-4 h-full flex items-center transition-colors duration-200 ${
               isActive ? "bg-[#43699c] text-white" : "hover:bg-[#43699c] hover:text-white"
             }`
