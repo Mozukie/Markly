@@ -7,7 +7,6 @@ export default function TeacherProfile() {
   const [teacher, setTeacher] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  localStorage.getItem("token") || sessionStorage.getItem("token");
 
   // Fetch current teacher info
   useEffect(() => {
@@ -16,7 +15,6 @@ export default function TeacherProfile() {
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
 
-          
         const res = await axios.get(
           "https://markly.onrender.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
@@ -90,10 +88,13 @@ export default function TeacherProfile() {
         <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">Personal Information</h2>
           <p>
-            <strong>Name:</strong> {teacher.name}
+            <strong>Name:</strong>{" "}
+            {teacher.firstname || teacher.lastname
+              ? `${teacher.firstname || ""} ${teacher.lastname || ""}`
+              : "N/A"}
           </p>
           <p>
-            <strong>Email:</strong> {teacher.email}
+            <strong>Email:</strong> {teacher.email || "N/A"}
           </p>
           <p>
             <strong>Age:</strong> {teacher.age || "N/A"}
@@ -112,10 +113,16 @@ export default function TeacherProfile() {
             Professional Information
           </h2>
           <p>
-            <strong>Subjects:</strong> {teacher.subjects?.join(", ") || "N/A"}
+            <strong>Subjects:</strong>{" "}
+            {Array.isArray(teacher.subjects) && teacher.subjects.length > 0
+              ? teacher.subjects.join(", ")
+              : "N/A"}
           </p>
           <p>
-            <strong>Expertise:</strong> {teacher.expertise?.join(", ") || "N/A"}
+            <strong>Expertise:</strong>{" "}
+            {Array.isArray(teacher.expertise) && teacher.expertise.length > 0
+              ? teacher.expertise.join(", ")
+              : "N/A"}
           </p>
           <p>
             <strong>Years of Experience:</strong>{" "}

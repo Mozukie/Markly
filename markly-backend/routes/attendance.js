@@ -1,5 +1,5 @@
 import express from "express";
-import Attendance from "../models/Attendance.js";
+import Attendance from "../models/classattendance.js";
 import { protect } from "../middleware/auth.js";
 import { recordAttendance } from "../controllers/attendance.js";
 
