@@ -80,36 +80,53 @@ export default function TeacherProfile() {
     <div className="min-h-screen bg-gray-50">
       <Header isLoggedIn={true} isTeacher={true} />
 
-      <main className="container mx-auto p-6 mt-24 space-y-6">
+      <main className="container mx-auto p-6 mt-24">
         <h1 className="text-3xl font-bold mb-6">Teacher Profile</h1>
-
-        {/* Registration / Basic Info */}
-        <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2">Registration Information</h2>
-          <p><strong>Name:</strong> {teacher.name}</p>
-          <p><strong>Email:</strong> {teacher.email}</p>
-          {teacher.username && (
-            <p><strong>Username:</strong> {teacher.username}</p>
-          )}
-        </section>
 
         {/* Personal Info */}
         <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">Personal Information</h2>
-          <p><strong>Age:</strong> {teacher.age || "N/A"}</p>
-          <p><strong>Phone:</strong> {teacher.phone || "N/A"}</p>
-          <p><strong>Address:</strong> {teacher.address || "N/A"}</p>
+          <p>
+            <strong>Name:</strong> {teacher.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {teacher.email}
+          </p>
+          <p>
+            <strong>Age:</strong> {teacher.age || "N/A"}
+          </p>
+          <p>
+            <strong>Phone:</strong> {teacher.phone || "N/A"}
+          </p>
+          <p>
+            <strong>Address:</strong> {teacher.address || "N/A"}
+          </p>
         </section>
 
         {/* Professional Info */}
         <section className="mb-6 bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2">Professional Information</h2>
-          <p><strong>Subjects:</strong> {teacher.subjects?.join(", ") || "N/A"}</p>
-          <p><strong>Expertise:</strong> {teacher.expertise?.join(", ") || "N/A"}</p>
-          <p><strong>Years of Experience:</strong> {teacher.yearsOfExperience || 0}</p>
-          <p><strong>Bio:</strong> {teacher.bio || "N/A"}</p>
-          <p><strong>Department:</strong> {teacher.department || "N/A"}</p>
-          <p><strong>Employee ID:</strong> {teacher.employeeId || "N/A"}</p>
+          <h2 className="text-xl font-semibold mb-2">
+            Professional Information
+          </h2>
+          <p>
+            <strong>Subjects:</strong> {teacher.subjects?.join(", ") || "N/A"}
+          </p>
+          <p>
+            <strong>Expertise:</strong> {teacher.expertise?.join(", ") || "N/A"}
+          </p>
+          <p>
+            <strong>Years of Experience:</strong>{" "}
+            {teacher.yearsOfExperience || 0}
+          </p>
+          <p>
+            <strong>Bio:</strong> {teacher.bio || "N/A"}
+          </p>
+          <p>
+            <strong>Department:</strong> {teacher.department || "N/A"}
+          </p>
+          <p>
+            <strong>Employee ID:</strong> {teacher.employeeId || "N/A"}
+          </p>
         </section>
 
         <button
