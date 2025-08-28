@@ -7,6 +7,7 @@ export default function TeacherProfile() {
   const [teacher, setTeacher] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  localStorage.getItem("token") || sessionStorage.getItem("token");
 
   // Fetch current teacher info
   useEffect(() => {
@@ -14,6 +15,8 @@ export default function TeacherProfile() {
       try {
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
+
+          
         const res = await axios.get(
           "https://markly.onrender.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
