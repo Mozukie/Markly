@@ -19,6 +19,7 @@ export default function TeacherProfile() {
           "https://markly.onrender.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
         setTeacher(res.data);
       } catch (err) {
         console.error(
@@ -35,14 +36,18 @@ export default function TeacherProfile() {
 
   // Update teacher info
   const handleUpdateTeacher = async (updatedData) => {
+    if (!teacher?._id) return;
+
     try {
       const token =
         localStorage.getItem("token") || sessionStorage.getItem("token");
+
       const res = await axios.put(
         `https://markly.onrender.com/api/auth/teacher/${teacher._id}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setTeacher(res.data);
       setModalOpen(false);
       alert("Profile updated successfully!");
@@ -89,9 +94,8 @@ export default function TeacherProfile() {
           <h2 className="text-xl font-semibold mb-2">Personal Information</h2>
           <p>
             <strong>Name:</strong>{" "}
-            {teacher.firstname || teacher.lastname
-              ? `${teacher.firstname || ""} ${teacher.lastname || ""}`
-              : "N/A"}
+            {`${teacher.firstname || ""} ${teacher.lastname || ""}`.trim() ||
+              "N/A"}
           </p>
           <p>
             <strong>Email:</strong> {teacher.email || "N/A"}
@@ -114,19 +118,19 @@ export default function TeacherProfile() {
           </h2>
           <p>
             <strong>Subjects:</strong>{" "}
-            {Array.isArray(teacher.subjects) && teacher.subjects.length > 0
+            {teacher.subjects?.length > 0
               ? teacher.subjects.join(", ")
               : "N/A"}
           </p>
           <p>
             <strong>Expertise:</strong>{" "}
-            {Array.isArray(teacher.expertise) && teacher.expertise.length > 0
+            {teacher.expertise?.length > 0
               ? teacher.expertise.join(", ")
               : "N/A"}
           </p>
           <p>
             <strong>Years of Experience:</strong>{" "}
-            {teacher.yearsOfExperience || 0}
+            {teacher.yearsOfExperience ?? 0}
           </p>
           <p>
             <strong>Bio:</strong> {teacher.bio || "N/A"}

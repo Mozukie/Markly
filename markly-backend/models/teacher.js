@@ -2,14 +2,18 @@ import mongoose from "mongoose";
 
 const teacherSchema = new mongoose.Schema(
   {
-
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
-    name: {
+    firstname: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastname: {
       type: String,
       required: true,
       trim: true,
@@ -22,22 +26,24 @@ const teacherSchema = new mongoose.Schema(
     },
     age: {
       type: Number,
-      min: 18, // teachers usually at least adults
+      min: 18,
     },
     address: {
       type: String,
+      default: "",
     },
     phone: {
       type: String,
+      default: "",
     },
 
     // 🔹 Professional Profile
     subjects: {
-      type: [String], // e.g. ["Math", "Science"]
+      type: [String],
       default: [],
     },
     expertise: {
-      type: [String], // e.g. ["Algebra", "Physics"]
+      type: [String],
       default: [],
     },
     yearsOfExperience: {
@@ -57,6 +63,7 @@ const teacherSchema = new mongoose.Schema(
     },
     department: {
       type: String,
+      default: "",
     },
   },
   { timestamps: true }
