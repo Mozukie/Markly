@@ -116,7 +116,7 @@ export default function TeacherProfile() {
           <h2 className="text-xl font-semibold mb-2">
             Professional Information
           </h2>
-          <p>
+          {/* <p>
             <strong>Subjects:</strong>{" "}
             {teacher.subjects?.length > 0
               ? teacher.subjects.join(", ")
@@ -131,7 +131,7 @@ export default function TeacherProfile() {
           <p>
             <strong>Years of Experience:</strong>{" "}
             {teacher.yearsOfExperience ?? 0}
-          </p>
+          </p> */}
           <p>
             <strong>Bio:</strong> {teacher.bio || "N/A"}
           </p>
