@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
+    // Link to User (auth system)
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     // 🔹 Personal Profile
     name: {
       type: String,
@@ -35,14 +42,14 @@ const studentSchema = new mongoose.Schema(
     studentNumber: {
       type: String,
       unique: true,
-      sparse: true, 
+      sparse: true,
     },
     clubs: {
-      type: [String], 
+      type: [String],
       default: [],
     },
 
-
+    // 🔹 Guardian Info
     guardianName: {
       type: String,
     },

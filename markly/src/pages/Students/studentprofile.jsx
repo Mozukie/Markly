@@ -14,7 +14,7 @@ export default function StudentProfile() {
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
         const res = await axios.get(
-          "https://markly.onrender.com/api/students",
+          "https://markly.onrender.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudentData(res.data || []);

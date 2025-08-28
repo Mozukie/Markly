@@ -10,6 +10,10 @@ const router = express.Router();
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
+/* ===========================
+   AUTH ROUTES
+=========================== */
+
 // @register
 router.post("/register", async (req, res) => {
   try {
@@ -71,6 +75,10 @@ router.post("/login", async (req, res) => {
 });
 
 
+/* ===========================
+   CLASS ROUTES
+=========================== */
+
 router.get("/classdata", protect, async (req, res) => {
   try {
     const classes = await Class.find({ teacher: req.user._id });
@@ -79,6 +87,21 @@ router.get("/classdata", protect, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+router.delete("/classes/:id", protect, async (req, res) => {
+  try {
+    const deletedClass = await Class.findByIdAndDelete(req.params.id);
+    if (!deletedClass) return res.status(404).json({ message: "Class not found" });
+    res.json({ message: "Class deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+/* ===========================
+   USER PROFILE ROUTES
+=========================== */
 
 // @update profile
 router.put("/profile", protect, async (req, res) => {
@@ -99,7 +122,6 @@ router.put("/profile", protect, async (req, res) => {
   }
 });
 
-
 router.get("/me", protect, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -110,17 +132,98 @@ router.get("/me", protect, async (req, res) => {
   }
 });
 
-// DELETE /api/classes/:id
-router.delete("/classes/:id", protect, async (req, res) => {
+
+/* ===========================
+   STUDENT CRUD ROUTES
+=========================== */
+
+// ➤ Get all students
+router.get("/students", protect, async (req, res) => {
   try {
-    const deletedClass = await Class.findByIdAndDelete(req.params.id);
-    if (!deletedClass) return res.status(404).json({ message: "Class not found" });
-    res.json({ message: "Class deleted successfully" });
+    const students = await User.find({ role: "Student" }).select("-password");
+    res.status(200).json(students);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
+// ➤ Get single student by ID
+router.get("/students/:id", protect, async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id).select("-password");
+    if (!student || student.role !== "Student")
+      return res.status(404).json({ error: "Student not found" });
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
+// ➤ Update student by ID
+router.put("/students/:id", protect, async (req, res) => {
+  try {
+    const updatedStudent = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!updatedStudent || updatedStudent.role !== "Student")
+      return res.status(404).json({ error: "Student not found" });
+
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// ➤ Delete student by ID
+router.delete("/students/:id", protect, async (req, res) => {
+  try {
+    const deletedStudent = await User.findByIdAndDelete(req.params.id);
+    if (!deletedStudent || deletedStudent.role !== "Student")
+      return res.status(404).json({ error: "Student not found" });
+
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/teacher/:id", protect, async (req, res) => {
+  try {
+    const teacher = await Teacher.findOne({ user: req.params.id });
+    if (!teacher) return res.status(404).json({ message: "Teacher not found" });
+    res.json(teacher);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// UPDATE teacher profile
+router.put("/teacher/:id", protect, async (req, res) => {
+  try {
+    const updatedTeacher = await Teacher.findOneAndUpdate(
+      { user: req.params.id },
+      req.body,
+      { new: true }
+    );
+    if (!updatedTeacher) return res.status(404).json({ message: "Teacher not found" });
+    res.json(updatedTeacher);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// DELETE teacher profile
+router.delete("/teacher/:id", protect, async (req, res) => {
+  try {
+    const deletedTeacher = await Teacher.findOneAndDelete({ user: req.params.id });
+    if (!deletedTeacher) return res.status(404).json({ message: "Teacher not found" });
+    res.json({ message: "Teacher deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 export default router;
