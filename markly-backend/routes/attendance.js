@@ -3,7 +3,6 @@ import express from "express";
 import Attendance from "../models/Attendance.js";
 // import Class from "../models/class.js";
 import { protect } from "../middleware/auth.js";
-import express from "express";
 import { recordAttendance } from "../controllers/attendance.js";
 
 const router = express.Router();
