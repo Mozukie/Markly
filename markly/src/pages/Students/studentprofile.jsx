@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header.jsx";
+import StudentModal from "../../components/studentModal.jsx";
 import axios from "axios";
 
 export default function StudentProfile() {
