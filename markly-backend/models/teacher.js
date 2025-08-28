@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 const teacherSchema = new mongoose.Schema(
   {
-    // 🔹 Personal Profile
+
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,
@@ -47,7 +53,7 @@ const teacherSchema = new mongoose.Schema(
     employeeId: {
       type: String,
       unique: true,
-      sparse: true, 
+      sparse: true,
     },
     department: {
       type: String,

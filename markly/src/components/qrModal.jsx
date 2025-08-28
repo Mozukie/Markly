@@ -8,7 +8,9 @@ export default function QRCodeModal({ isOpen, onClose, classId }) {
   // Memoize function so ESLint is happy
   const generateQrCode = useCallback(() => {
     const timestamp = Date.now();
-    const newQrValue = `${window.location.origin}/join-class/${classId}?expiry=${expiry}&t=${timestamp}`;
+    const newQrValue = `https://markly.onrender.com/api/attendance/record?classId=${classId}&expiry=${expiry}&t=${timestamp}`;
+
+
     setQrValue(newQrValue);
   }, [classId, expiry]);
 
