@@ -98,7 +98,7 @@ export default function Classes() {
       subject: cls.classSubject,
       code: cls.classCode,
       section: cls.classSection,
-      days: cls.classDay || [],
+      days: cls.classDays || [],
       time: cls.classTime,
     });
     setEditId(cls._id);
@@ -164,7 +164,7 @@ export default function Classes() {
                       <strong>Section:</strong> {cls.classSection}
                     </p>
                     <p>
-                      <strong>Day:</strong> {cls.classDay}
+                      <strong>Day:</strong> {Array.isArray(cls.classDays) ? cls.classDays.join(", ") : cls.classDays}
                     </p>
                     <p>
                       <strong>Time:</strong> {cls.classTime}
