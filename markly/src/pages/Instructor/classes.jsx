@@ -164,7 +164,7 @@ export default function Classes() {
                       <strong>Section:</strong> {cls.classSection}
                     </p>
                     <p>
-                      <strong>Day:</strong> {Array.isArray(cls.classDays) ? cls.classDays.join(", ") : cls.classDays}
+                      <strong>Day:</strong> { Array.isArray(cls.classDays) ? cls.classDays.join(", ") : cls.classDays}
                     </p>
                     <p>
                       <strong>Time:</strong> {cls.classTime}
