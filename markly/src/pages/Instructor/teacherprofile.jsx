@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/Header.jsx";
-import TeacherModal from "../components/TeacherModal.jsx";
 
 export default function TeacherProfile() {
   const [teacher, setTeacher] = useState(null);
