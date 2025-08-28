@@ -15,7 +15,7 @@ export default function TeacherProfile() {
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
         const res = await axios.get(
-          "https://markly.onrender.com/api/teachers/me",
+          "https://markly.onrender.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setTeacher(res.data);
